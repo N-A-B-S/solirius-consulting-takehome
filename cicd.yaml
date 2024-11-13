@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - '**'
 
 env: 
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
@@ -33,7 +34,7 @@ jobs:
         run: terraform plan -out=tfplan
 
       - name: Terraform apply
-        if: success() && github.event name == 'push'
+        if: success() && github.event name == 'push' && github.ref == 'ref/heads/main'
         run: terraform apply tfplan -auto-approve #Using that plan output too is a good idea. 
 
 
